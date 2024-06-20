@@ -168,7 +168,7 @@ tidied_marketing_data %>%
 
 # Tidying levels of Education and Marital Status
 
-tidied_marketing_data_categorical <- tidied_marketing_data_666666removed %>%
+tidied_marketing_data_categorical <- tidied_marketing_data %>%
   mutate(Marital_Status = dplyr::recode(Marital_Status, "Alone" = "Single")) %>%
   mutate(Education = dplyr::recode(Education, "2n Cycle" = "Master")) %>%
   filter(Marital_Status != "Absurd" & Marital_Status != "YOLO") %>%
@@ -231,11 +231,11 @@ boxplot(tidied_marketing_data_categorical$Income)
 
 # THERE IS AN EXTREME OUTLIER IN INCOME
 
-tidied_marketing_data %>%
+tidied_marketing_data_categorical %>%
   summarise(max_income = max(Income))
 # 666666 is an outlier 
 
-tidied_marketing_data_666666removed <- tidied_marketing_data %>%
+tidied_marketing_data_666666removed <- tidied_marketing_data_categorical %>%
   filter(Income!= 666666)
 
 
@@ -280,7 +280,8 @@ for (p in purchasing) {
     scale_colour_manual(name = "Response",
                           values = c("1" = "blue", "0" = "red"),
                           labels = c("1" = "Responded", "0" = "Did not Respond")) +
-    labs(title = paste("The Relationship Between",p,"and Income Across Campaign Response Groups"))  
+    labs(title = paste("The Relationship Between",p,"and Income Across Campaign Response Groups")) +
+    theme_minimal()
   
   plot_list_purchasing_income[[p]] <- plot
 }
